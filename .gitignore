@@ -1,0 +1,19 @@
+# Node Dependencies
+node_modules/
+
+# Environment Variables
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+
+# IDE Settings
+.vscode/
+
+# Uploads (if you store images)
+uploads/
