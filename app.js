@@ -3,12 +3,13 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import { config } from 'dotenv';
 import morgan from 'morgan';
-import userRoutes from './routes/user.routes.js'
 import { errorMiddleware } from './middlewares/error.middleware.js';
+import userRouter from './routes/user.routes.js';
 config();
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // app.use(cors({
 //     origin: []
@@ -28,11 +29,11 @@ app.use('/ping', (req, res) => {
 
 // 3 modules routes
 
-app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/user', userRouter);
 
-app.use((req, res) => {
-    res.status(404).send("OOPS!! Page not found");
-});
+// app.use((req, res) => {
+//     res.status(404).send("OOPS!! Page not found");
+// });
 
 app.use(errorMiddleware);
 
