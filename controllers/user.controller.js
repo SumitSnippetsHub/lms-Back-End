@@ -84,6 +84,7 @@ const login = async (req, res, next) => {
             success: true,
             message: "User logged in successfully",
             user,
+            token
         });
     } catch (err) {
         return next(new AppError(err.message, 500));
@@ -107,8 +108,22 @@ const logout = (req, res) => {
     });
 };
 
-const getProfile = (req, res) => {
-    res.send('here is me');
+const getProfile = async (req, res, next) => {
+    // res.send('here is me');
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId);
+
+        res.status(200).json({
+            success: true,
+            message: 'User detils',
+            user
+        });
+    } catch (err) {
+        return next(new AppError("Failed to fetch user details"));
+    };
+
+
 };
 
 export {
