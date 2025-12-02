@@ -1,6 +1,8 @@
 import { token } from "morgan";
 import User from "../models/user.model.js";
 import AppError from "../utils/error.utils.js";
+import cloudinary from 'cloudinary'
+import fs from 'fs/promises'
 
 const cookieOptions = {
     maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
@@ -9,6 +11,7 @@ const cookieOptions = {
 };
 
 const register = async (req, res, next) => {
+
     const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
@@ -26,10 +29,11 @@ const register = async (req, res, next) => {
         fullName,
         email,
         password,
-        // avatar: {
-        //     public_id,
-        //     secure_url: ""
-        // }
+        avatar: {
+            public_id: email,
+            secure_url:
+                'https://res.cloudinary.com/du9jzqlpt/image/upload/v1674647316/avatar_drzgxv.jpg',
+        }
     });
 
     if (!user) {
@@ -38,6 +42,29 @@ const register = async (req, res, next) => {
     }
 
     //TODO file upload
+    console.log('file details', JSON.stringify(req.file));
+    if (req.file) {
+
+        try {
+            const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                folder: "lms",
+                width: 250,
+                height: 250,
+                gravity: 'faces',
+                crop: 'fill'
+            });
+
+            if (result) {
+                user.avatar.public_id = result.public_id;
+                user.avatar.secure_url = result.secure_url;
+
+                //Remove file from local server
+                fs.rm(`uploads/${req.file.filename}`);
+            }
+        } catch (err) {
+            return next(new AppError(err || 'File not uploaded,please try again', 500));
+        }
+    }
 
     await user.save();
 
@@ -50,7 +77,6 @@ const register = async (req, res, next) => {
         message: 'User registered successfully',
         user,
     });
-    res.send('im here');
 
 };
 

@@ -10,4 +10,13 @@
         defines the user Schema model,
         applied encryption for password,
 
+- **Day 2**: 
+        define register, login, logout routes controllers with proper working,
+        used JWT token and
+        bcryptjs for hashing. 
+
+- **Day 3**:
+        created userdetails route,
+        all main user routes created,
+        file uploading done with multer and cloudinary implementation,
 
