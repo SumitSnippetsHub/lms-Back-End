@@ -20,3 +20,7 @@
         all main user routes created,
         file uploading done with multer and cloudinary implementation,
 
+**Day 4**:
+        fixes the minor problems occurs for file uploads.
+        created forgot password route fully working,
+        using nodemailer and mailtrap.

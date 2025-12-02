@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import AppError from "../utils/error.utils.js";
 import cloudinary from 'cloudinary'
 import fs from 'fs/promises'
+import sendEmail from "../utils/sendEmail.js";
 
 const cookieOptions = {
     maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
@@ -152,9 +153,57 @@ const getProfile = async (req, res, next) => {
 
 };
 
+const forgotPassword = async (req, res, next) => {
+    const { email } = req.body; //fetch email form body
+
+
+    //check validations if exists or not
+    if (!email) {
+        return next(new AppError('Email is required', 400));
+    }
+
+    //check in DB exists or not
+    const user = await User.findOne({ email });
+    if (!user) {
+        return next(new AppError("Email not registered"))
+    }
+
+    //if exists then set token for resetpassword
+    const resetToken = await user.generatePasswordResetToken();
+
+    await user.save();
+
+    const resetPassURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+    const subject = 'Reset Password';
+    const message = `You can reset your password by clicking <a href=${resetPassURL} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab${resetPassURL}.\n If you have not registered this, kindly ignore.`;
+    // method to send email
+    try {
+        await sendEmail(email, subject, message);
+
+        res.status(200).json({
+            success: true,
+            message: `Reset password token has been sent to ${email} successfully`
+        })
+    } catch (err) {
+        // if not works then this for safety purpose
+        user.forgotPasswordExpiry = undefined;
+        user.forgotPasswordToken = undefined;
+
+        await user.save();
+        return next(new AppError(err.message, 500));
+    }
+}
+
+const resetPassword = (req, res, next) => {
+
+}
+
 export {
     register,
     login,
     logout,
-    getProfile
+    getProfile,
+    forgotPassword,
+    resetPassword
 }

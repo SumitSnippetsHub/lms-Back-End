@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProfile, login, logout, register } from "../controllers/user.controller.js";
+import { forgotPassword, getProfile, login, logout, register, resetPassword } from "../controllers/user.controller.js";
 import { isLoggedIn } from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/multer.middleware.js";
 
@@ -9,5 +9,8 @@ userRouter.post('/register', upload.single("avatar"), register); // multer middl
 userRouter.post('/login', login);
 userRouter.get('/logout', logout);
 userRouter.get('/me', isLoggedIn, getProfile);
+
+userRouter.post('/forgot-password', forgotPassword);
+userRouter.post("/reset/:resetToken", resetPassword)
 
 export default userRouter;
