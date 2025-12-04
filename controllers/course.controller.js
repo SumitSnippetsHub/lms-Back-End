@@ -106,8 +106,33 @@ const createCourse = async (req, res, next) => {
 }
 
 const updateCourse = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+        const course = await Course.findByIdAndUpdate(
+            id, //course which have to update
+            {
+                $set: req.body //used to set any info get from body regarding update just update
+            },
+            {
+                runValidators: true // checks validation reagrding data 
+            }
+        );
 
+        if (!course) {
+            return next(new AppError('Course with given id does not exist', 500));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Course updated successfully',
+            course
+        });
+    } catch (err) {
+        return next(new AppError(err.message, 500));
+    }
 }
+
 
 const removeCourse = async (req, res, next) => {
 
