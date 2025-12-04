@@ -34,7 +34,7 @@ const getLecturesByCourseId = async (req, res, next) => {
             lectures: course.lectures
         });
     } catch (err) {
-        return next(new AppError(e.message, 500));
+        return next(new AppError(err.message, 500));
     }
 }
 

@@ -5,7 +5,7 @@ const isLoggedIn = async (req, res, next) => {
     const { token } = req.cookies;
 
     if (!token) {
-        return next(new AppError('Unauthenticate, please login again'));
+        return next(new AppError('Unauthenticate, please login again', 400));
     };
 
     const userDetails = Jwt.verify(token, process.env.JWT_SECRET);
