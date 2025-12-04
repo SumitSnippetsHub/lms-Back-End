@@ -29,4 +29,8 @@
 
 **Day 5 Course Module**:
         created course model schema,
-        created getAllCourses and getCourseById route,
+        created getAllCourses and getCourseById route.
+        createCourse,
+    updateCourse,
+    removeCourse
+
