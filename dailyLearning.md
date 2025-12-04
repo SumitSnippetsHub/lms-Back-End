@@ -24,3 +24,9 @@
         fixes the minor problems occurs for file uploads.
         created forgot password route fully working,
         using nodemailer and mailtrap.
+        made reset password flow , working fine.
+        created updateUser (profile) route.
+
+**Day 5 Course Module**:
+        created course model schema,
+        created getAllCourses and getCourseById route,
