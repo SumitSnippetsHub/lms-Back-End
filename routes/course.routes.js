@@ -13,5 +13,5 @@ courseRouter.route('/:id')
     .get(isLoggedIn, authorizedRoles('ADMIN'), getLecturesByCourseId)
     .put(isLoggedIn, authorizedRoles('ADMIN'), updateCourse)
     .delete(isLoggedIn, authorizedRoles('ADMIN'), removeCourse)
-    .post(isLoggedIn, authorizedRoles('ADMIN'), addLectureToCourseById);
+    .post(isLoggedIn, authorizedRoles('ADMIN'), upload.single('lecture'), addLectureToCourseById);
 export default courseRouter;
