@@ -15,6 +15,15 @@ const isLoggedIn = async (req, res, next) => {
 
 }
 
+const authorizedRoles = (...roles) => async (req, res, next) => {
+    const currUserRole = req.user.role;
+    if (!roles.includes(currUserRole)) {
+        return next(new AppError('You do not have permission to access this page', 403))
+    }
+    next();
+}
+
 export {
-    isLoggedIn
+    isLoggedIn,
+    authorizedRoles
 }
