@@ -30,7 +30,10 @@
 **Day 5 Course Module**:
         created course model schema,
         created getAllCourses and getCourseById route.
-        createCourse,
-    updateCourse,
-    removeCourse
+        created Routes - createCourse,updateCourse,
 
+**Day 6**:
+        creted removecourse route,
+        added Authentication,
+        created role based authorization flow,
+        
