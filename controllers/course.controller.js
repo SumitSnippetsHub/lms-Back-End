@@ -223,6 +223,34 @@ const addLectureToCourseById = async (req, res, next) => {
     }
 }
 
+const removeLectureFromCourseById = async (req, res, next) => {
+    try {
+        const { courseId, lectureId } = req.params;
+
+        const course = await Course.findById(courseId);
+        if (!course) return next(new AppError("Course not found", 404));
+
+        const lecture = course.lectures.id(lectureId);
+        if (!lecture) return next(new AppError("Lecture not found", 404));
+
+        if (lecture.lectures?.public_id) {
+            await cloudinary.v2.uploader.destroy(lecture.lectures.public_id);
+        }
+
+        lecture.deleteOne();   // ✅ magically removes from array
+
+        course.numberOfLectures = course.lectures.length;
+        await course.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Lecture removed successfully"
+        });
+
+    } catch (err) {
+        next(new AppError(err.message, 500));
+    }
+};
 
 
 export {
@@ -231,5 +259,6 @@ export {
     createCourse,
     updateCourse,
     removeCourse,
-    addLectureToCourseById
+    addLectureToCourseById,
+    removeLectureFromCourseById
 }
