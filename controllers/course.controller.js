@@ -172,7 +172,8 @@ const addLectureToCourseById = async (req, res, next) => {
 
         const lecturesData = {
             title,
-            description
+            description,
+            lectures: {}
         };
 
         if (req.file) {
@@ -184,8 +185,8 @@ const addLectureToCourseById = async (req, res, next) => {
                 // If success
                 if (result) {
                     // Set the public_id and secure_url in array
-                    lecturesData.lecture.public_id = result.public_id;
-                    lecturesData.lecture.secure_url = result.secure_url;
+                    lecturesData.lectures.public_id = result.public_id;
+                    lecturesData.lectures.secure_url = result.secure_url;
                 }
 
                 // After successful upload remove the file from local storage

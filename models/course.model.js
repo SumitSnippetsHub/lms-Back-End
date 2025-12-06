@@ -33,7 +33,7 @@ const courseSchema = new Schema({
             title: String,
             description: String,
             lectures: {
-                piblic_id: {
+                public_id: {
                     type: String,
                     required: true,
                 },

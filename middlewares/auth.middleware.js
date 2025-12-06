@@ -15,11 +15,15 @@ const isLoggedIn = async (req, res, next) => {
 
 }
 
+//Role based authentication
 const authorizedRoles = (...roles) => async (req, res, next) => {
-    const currUserRole = req.user.role;
+    const currUserRole = req.user.role; //we fetch out the roles
+
+    // checks the validation
     if (!roles.includes(currUserRole)) {
         return next(new AppError('You do not have permission to access this page', 403))
     }
+    //if all set
     next();
 }
 

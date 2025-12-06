@@ -43,7 +43,7 @@ const register = async (req, res, next) => {
 
     }
 
-    //TODO file upload
+    //TODO file upload // done
     console.log('file details', JSON.stringify(req.file));
     if (req.file) {
 
@@ -290,6 +290,7 @@ const updateUser = async (req, res, next) => {
     if (fullName) {
         user.fullName = fullName;
     }
+
     console.log(fullName);
 
     if (req.file) {
