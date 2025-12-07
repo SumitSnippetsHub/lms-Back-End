@@ -237,7 +237,7 @@ const removeLectureFromCourseById = async (req, res, next) => {
             await cloudinary.v2.uploader.destroy(lecture.lectures.public_id);
         }
 
-        lecture.deleteOne();   // ✅ magically removes from array
+        lecture.deleteOne();   // ✅ removes from array
 
         course.numberOfLectures = course.lectures.length;
         await course.save();

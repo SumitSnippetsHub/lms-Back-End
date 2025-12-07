@@ -36,4 +36,13 @@
         creted removecourse route,
         added Authentication,
         created role based authorization flow,
-        
+        created add lectures to course route flow.
+
+**Day 7**:
+        created delete lectures from course flow,
+
+**Day 8 payment-module**
+             created payment model,
+             working on payment related routes,
+             added basic authentications.
+

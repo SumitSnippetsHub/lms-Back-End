@@ -49,7 +49,6 @@ const userSchema = new Schema({
         id: String,
         status: String
     }
-
 }, {
     timestamps: true
 });
