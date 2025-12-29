@@ -2,6 +2,7 @@ import Course from "../models/course.model.js"
 import AppError from "../utils/error.utils.js";
 import cloudinary from 'cloudinary'
 import fs from 'fs/promises'
+import path from "path";
 
 const getAllCourses = async (req, res, next) => {
     try {
