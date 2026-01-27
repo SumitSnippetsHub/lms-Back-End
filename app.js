@@ -45,12 +45,6 @@ app.use((req, res) => {
     res.status(404).send("OOPS!! Page not found");
 });
 
-app.get("/test", async (req, res) => {
-    res.json({
-        msg: "Test was successfull"
-    })
-})
-
 app.use(errorMiddleware);
 
 export default app;
